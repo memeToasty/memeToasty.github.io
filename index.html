@@ -1,90 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>🍞</title>
-	<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-	<script type="importmap">
-        {
-            "imports": {
-                "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.150.1/three.module.min.js"
-            }
-        }
-    </script>
-	<script type="module">
-		import * as THREE from 'three';
-
-		function componentToHex(c) {
-			let hex = c.toString(16);
-			return hex.length == 1 ? "0" + hex : hex;
-		}
-		function rgbToHex(r, g, b) {
-			return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-		}
-
-		function sinToNormalizedColor(time, target) {
-			return (target / 2 * (Math.sin(time) + 1)) / 256
-		}
-
-		function main() {
-			const canvas = document.querySelector('#c');
-			const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
-
-
-			const camera = new THREE.PerspectiveCamera(75, 2, 0.1, 5);
-
-			camera.position.z = 2;
-
-			const scene = new THREE.Scene();
-			const geometry = new THREE.BoxGeometry(1, 1, 1);
-			const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-			const cube = new THREE.Mesh(geometry, material);
-
-			scene.add(cube);
-			renderer.render(scene, camera);
-
-			function resizeRendererToDisplaySize(renderer) {
-				const canvas = renderer.domElement;
-				const width = canvas.clientWidth;
-				const height = canvas.clientHeight;
-				const needResize = canvas.width !== width || canvas.height !== height;
-				if (needResize) {
-					renderer.setSize(width, height, false);
-				}
-				return needResize;
-			}
-
-			function render(time) {
-				time *= 0.001; // convert time to seconds
-
-				// cube.rotation.x = time;
-				cube.rotation.y = 5 * Math.sin(time);
-				material.color = new THREE.Color(sinToNormalizedColor(time, 64), sinToNormalizedColor(time, 108), sinToNormalizedColor(time, 255));
-
-				if (resizeRendererToDisplaySize(renderer)) {
-					const canvas = renderer.domElement;
-					camera.aspect = canvas.clientWidth / canvas.clientHeight;
-					camera.updateProjectionMatrix();
-				}
-
-				renderer.render(scene, camera);
-				requestAnimationFrame(render);
-			}
-			requestAnimationFrame(render);
-		}
-
-		main();
-	</script>
-	<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-	<div id="info">🍞</div>
-	<canvas id="c"></canvas>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍞</text></svg>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Three.js + TypeScript Starter</title>
+    <link rel="stylesheet" href="style/style.css">
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
